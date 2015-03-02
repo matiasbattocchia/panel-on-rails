@@ -1,0 +1,30 @@
+%h2 Casa matriz
+%table.table.table-striped
+  %tbody
+    %tr
+      %td  Domicilio
+      %td= @company.address 
+    %tr
+      %td  Localidad
+      %td= @company.locality
+    %tr
+      %td  Provincia
+      %td= @company.province.denomination
+    %tr
+      %td  País
+      %td= @company.country.denomination
+    %tr
+      %td  Código postal
+      %td= @company.postal_code
+    %tr
+      %td  Teléfonos
+      %td= @company.phone
+    %tr
+      %td  Fax
+      %td= @company.fax
+    %tr
+      %td  Correo electrónico
+      %td= mail_to @company.email
+    %tr
+      %td  Sitio web
+      %td= link_to @company.website

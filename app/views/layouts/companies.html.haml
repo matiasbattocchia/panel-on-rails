@@ -1,0 +1,22 @@
+- content_for :second_level_layout do
+  .row-fluid
+    .span12
+      .page-header
+        %h1
+          = @company.id
+          %small= @company.name
+          = @company.status.denomination
+
+  .row-fluid
+    .span3
+      %ul.nav.nav-tabs.nav-stacked
+        %li{ class: active_path('datos') }= link_to 'Datos de la compañía', company_path(@company) + '/datos'
+        %li{ class: active_path('estados') }= link_to 'Estados contables', company_path(@company) + '/estados_contables'
+        %li{ class: 'disabled' }= link_to 'Inversiones'
+        %li{ class: 'disabled' }= link_to 'Indicadores'
+        %li{ class: 'disabled' }= link_to 'Distribución geográfica'
+
+    .span9
+      = yield
+
+= render :template => 'layouts/application'

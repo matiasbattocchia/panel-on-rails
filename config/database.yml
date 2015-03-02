@@ -1,0 +1,22 @@
+development:
+  adapter: jdbcmssql
+  driver: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  url: 'jdbc:sqlserver://192.168.2.39;DatabaseName=Panel_Warehouse'
+  username: paneldesarrollo
+  password: matetazapan
+
+entidades:
+  adapter: jdbcmssql
+  driver: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  url: 'jdbc:sqlserver://192.168.0.2;DatabaseName=Entidades'
+  username: paneldesarrollo
+  password: matetazapan
+
+sinensup:
+  adapter: jdbcmssql
+  driver: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  url: 'jdbc:sqlserver://192.168.2.48;DatabaseName=Sinensup'
+  username: paneldesarrollo
+  password: botellaconaguahastalamitad
+  schema: sinensup
+# ALTER USER paneldesarrollo WITH default_schema = sinensup

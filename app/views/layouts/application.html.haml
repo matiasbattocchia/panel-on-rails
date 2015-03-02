@@ -1,0 +1,29 @@
+!!!
+%html
+  %head
+    %title Panel de Control
+    = stylesheet_link_tag 'application', media: 'all'
+    = csrf_meta_tags
+
+  %body
+    .navbar.navbar-default
+      .navbar-inner
+        .container
+          = link_to 'Panel de Control', '#', class: 'brand'
+
+          %ul.nav.navbar-nav
+            %li
+              %a{ href: '#' } Mercado asegurador
+            %li
+              %a{ href: '/compañías' } Compañías
+
+          %form.nav.navbar-form
+            .form-group
+              %input{ type: 'text', class: 'typeahead', placeholder: 'Buscar compañía' }
+
+          %img{ id: 'logo',  src: '/ssn.png' }
+
+    .container-fluid
+      = content_for?(:second_level_layout) ? yield(:second_level_layout) : yield
+
+    = javascript_include_tag 'application'

@@ -1,0 +1,5 @@
+es:
+  routes:
+    companies: compañías
+    data: datos
+    balance: estados_contables

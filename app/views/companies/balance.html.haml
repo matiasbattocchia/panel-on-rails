@@ -1,0 +1,47 @@
+%form{method: 'get', action: '/compañías/' + @company.id + '/estados_contables'}
+  %label Trimestre
+  %select{onchange: 'this.form.submit()', name: 'periodo'}
+    - @periods.each do |period|
+      %option{value: period[:periodo], selected: period == @period}= period[:periodo]
+
+.row-fluid
+  .span6
+    %table.table.table-striped
+      %caption Activo
+      %tbody
+        - @assets.each do |description, value|
+          %tr
+            %td= description
+            %td= number_to_currency(value, unit: '', precision: 0)
+
+  .span6
+    %table.table.table-striped
+      %caption Pasivo
+      %tbody
+        - @liabilities.each do |description, value|
+          %tr
+            %td= description
+            %td= number_to_currency(value, unit: '', precision: 0)
+
+.row-fluid
+  .span6
+    %table.table
+      %tbody
+        %tr
+          %td Total activo
+          %td= number_to_currency(activo = @assets.inject(0) { |sum, asset| sum + asset[1] }, unit: '', precision: 0)
+
+  .span6
+    %table.table
+      %tbody
+        %tr
+          %td Total pasivo
+          %td= number_to_currency(pasivo = @liabilities.inject(0) { |sum, asset| sum + asset[1] }, unit: '', precision: 0)
+
+.row-fluid
+  .span12
+    %table.table
+      %tbody
+        %tr
+          %td Patrimonio neto
+          %td= number_to_currency(activo - pasivo, unit: '', precision: 0)

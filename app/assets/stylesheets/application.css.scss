@@ -1,0 +1,11 @@
+/*
+ *= require_self
+ *= require_tree .
+ */
+@import 'bootstrap';
+
+img#logo {
+  height: 30px;
+  padding: 5px 0px;
+  float: right;
+}

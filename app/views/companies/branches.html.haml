@@ -1,0 +1,13 @@
+%h2= title
+%table.table.table-striped
+  %thead
+    %tr
+      %th Nombre
+      %th Localidad
+      %th Provincia
+  %tbody
+    - branches.each do |branch|
+      %tr
+        %td= branch.name
+        %td= branch.locality
+        %td= branch.province

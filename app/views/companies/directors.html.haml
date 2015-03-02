@@ -1,0 +1,15 @@
+%h2 Directorio
+%table.table.table-striped
+  %thead
+    %tr
+      %th Nombre
+      %th Cargo
+      %th Desde
+      %th Hasta
+  %tbody
+    - @directors.each do |director|
+      %tr
+        %td= director.name
+        %td= director.position
+        %td= director.from.strftime('%d %b %y')
+        %td= director.to.strftime('%d %b %y')

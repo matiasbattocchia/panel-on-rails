@@ -1,0 +1,16 @@
+%h1 Compañías
+
+%table.table.table-striped
+  %thead
+    %tr
+      %th Código
+      %th Denominación
+      %th Estado
+  %tbody
+    - @companies.each do |company|
+      - if company.status
+        %tr
+          %td= company.id
+          %td= link_to company.short_name, company_path(company) + '/datos'
+          %td
+            %span{ class: 'label ' + (company.status.denomination == 'Activa' ? 'label-success' : 'label-danger') }= company.status.denomination

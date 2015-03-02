@@ -1,0 +1,17 @@
+%h2 Accionistas
+%table.table.table-striped
+  %thead
+    %tr
+      %th Nombre
+      %th Personería
+      %th Origen
+      %th Acciones
+      %th Participación
+  %tbody
+    - @shareholders.each do |shareholder|
+      %tr
+        %td= shareholder.name
+        %td= shareholder.personhood
+        %td= shareholder.source
+        %td= shareholder.shares
+        %td= shareholder.stock.to_s + '%'
