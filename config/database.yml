@@ -17,6 +17,6 @@ sinensup:
   driver: com.microsoft.sqlserver.jdbc.SQLServerDriver
   url: 'jdbc:sqlserver://192.168.2.48;DatabaseName=Sinensup'
   username: paneldesarrollo
-  password: botellaconaguahastalamitad
+  password: matetazapan
   schema: sinensup
 # ALTER USER paneldesarrollo WITH default_schema = sinensup

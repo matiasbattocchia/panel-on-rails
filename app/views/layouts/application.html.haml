@@ -7,23 +7,35 @@
 
   %body
     .navbar.navbar-default
-      .navbar-inner
-        .container
-          = link_to 'Panel de Control', '#', class: 'brand'
+      .container-fluid
+        .navbar-header
+          = link_to 'Panel de Control', '#', class: 'navbar-brand'
 
+        %ul.nav.navbar-nav
+          %li
+            %a{ href: '#' } Mercado asegurador
+          %li.active
+            %a{ href: '/compañías' } Compañías
+
+        %form.navbar-form.navbar-left{ method: 'post', action: '/compañías' }
+          .form-group
+            %input{ type: 'text', name: 'código', hidden: true }
+            %input{ type: 'text', class: 'form-control typeahead', placeholder: 'Buscar compañía' }
+
+        -if session[:user]
           %ul.nav.navbar-nav
-            %li
-              %a{ href: '#' } Mercado asegurador
-            %li
-              %a{ href: '/compañías' } Compañías
+            %li.dropdown
+              != "<a href='#', class='dropdown-toggle', data-toggle='dropdown', role='button', aria-expanded='false'>#{session[:user]}<span class='caret'></span></a>"
 
-          %form.nav.navbar-form
-            .form-group
-              %input{ type: 'text', class: 'typeahead', placeholder: 'Buscar compañía' }
+              %ul.dropdown-menu{role:"menu"}
+                %li
+                  %a{href:'/salir'} Salir
 
-          %img{ id: 'logo',  src: '/ssn.png' }
+        %img{ id: 'logo',  src: '/ssn.png' }
 
     .container-fluid
       = content_for?(:second_level_layout) ? yield(:second_level_layout) : yield
 
+    %script{ src: '//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js' }
+    %script{ src: '//cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js' }
     = javascript_include_tag 'application'

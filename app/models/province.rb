@@ -4,4 +4,5 @@ class Province < Connection::Entidades
   alias_attribute :denomination, :Denominacion
 
   has_many :companies
+  has_many :productions, foreign_key: :id_geo_provincia
 end

@@ -1,22 +1,30 @@
 - content_for :second_level_layout do
-  .row-fluid
-    .span12
+  .row
+    .col-xs-12
       .page-header
         %h1
           = @company.id
           %small= @company.name
           = @company.status.denomination
 
-  .row-fluid
-    .span3
-      %ul.nav.nav-tabs.nav-stacked
-        %li{ class: active_path('datos') }= link_to 'Datos de la compañía', company_path(@company) + '/datos'
+  .row
+    .col-xs-3
+      %ul.nav.nav-pills.nav-stacked
+        %li{ class: active_path('datos') }= link_to 'Datos de la compañía', company_path(@company) + '/datos/general'
         %li{ class: active_path('estados') }= link_to 'Estados contables', company_path(@company) + '/estados_contables'
         %li{ class: 'disabled' }= link_to 'Inversiones'
         %li{ class: 'disabled' }= link_to 'Indicadores'
-        %li{ class: 'disabled' }= link_to 'Distribución geográfica'
+        %li{ class: active_path('dist') }= link_to 'Distribución geográfica', company_path(@company) + '/distribución_geográfica'
 
-    .span9
+    .col-xs-9
+
+      -# Debería usarse un layout para esto.
+      - if active_path('datos') == 'active'
+        %ul.nav.nav-tabs
+          %li{ class: active_path('general') }= link_to 'General', 'general'
+          %li{ class: active_path('directorio') }= link_to 'Directorio', 'directorio'
+          %li{ class: active_path('accionistas') }= link_to 'Accionistas', 'accionistas'
+
       = yield
 
 = render :template => 'layouts/application'

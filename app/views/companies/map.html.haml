@@ -1,0 +1,27 @@
+.row
+  .col-xs-12
+    %form.form-horizontal{method: 'get', action: '/compañías/' + @company.id + '/distribución_geográfica'}
+      .row
+        .col-xs-4
+          .form-group
+            %label.control-label.col-xs-3 Año
+            .col-xs-8
+              %select.form-control{onchange: 'this.form.submit()', name: 'periodo'}
+                - (2006..2012).each do |año|
+                  %option{value: año, selected: año.to_s == @period}= año
+
+        .col-xs-4
+          .form-group
+            %label.control-label.col-xs-3 Ramo
+            .col-xs-8
+              %select.form-control{onchange: 'this.form.submit()', name: 'ramo'}
+                %option{value: 'todos', selected: 'todos' == @branch} Todos
+                - ProductionBranch.all.each do |branch|
+                  %option{value: branch.id, selected: branch.id.to_s == @branch}= branch.description
+
+.row
+  .col-xs-4
+    %div{ id: 'container', style: 'position: relative; width: 400px; height: 400px;', data: {production: @production} }
+
+  .col-xs-8
+    #chart{ data: {evolution: @evolution} }

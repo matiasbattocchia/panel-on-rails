@@ -1,29 +1,31 @@
-%table.table
-  %tbody
-    %tr
-      %td  CUIT
-      %td= @company.cuit
-    %tr
-      %td  Naturaleza jurídica
-      %td= @company.corporate_type.denomination
-    %tr
-      %td  Ramas de actividad
-      %td= "#{@company.main_activity.denomination} y #{@company.secondary_activity.denomination}"
-    %tr
-      %td  Grupo asegurador
-      %td= @company.group.denomination
-    %tr
-      %td= link_to 'Casa matriz', company_path(@company) + '/headquarters'
-      %td= "#{@company.locality} (#{@company.province.denomination})"
-    %tr
-      %td= link_to 'Sucursales', company_path(@company) + '/branches'
-      %td= @branches.size
-    %tr
-      %td= link_to 'Agencias', company_path(@company) + '/agencies'
-      %td= @agencies.size
-    %tr
-      %td= link_to 'Directorio', company_path(@company) + '/directors'
-      %td= @president ? @president.name + ' (Presidente)' : '-'
-    %tr
-      %td= link_to 'Accionistas', company_path(@company) + '/shareholders'
-      %td= @shareholder ? "#{@shareholder.name} (#{@shareholder.source}) #{@shareholder.stock}%" : '-'
+.row
+  .col-xs-6
+    %table.table.attr
+      %tbody
+        %tr
+          %td.key  CUIT
+          %td= @company.cuit
+        %tr
+          %td.key  Naturaleza jurídica
+          %td= @company.corporate_type.denomination
+        %tr
+          %td.key  Ramas de actividad
+          %td= "#{@company.main_activity.denomination} y #{@company.secondary_activity.denomination}"
+        %tr
+          %td.key  Grupo asegurador
+          %td= @company.group.denomination
+        -# %tr
+        -#   %td= link_to 'Casa matriz', company_path(@company) + '/headquarters'
+        -#   %td= "#{@company.locality} (#{@company.province.denomination})"
+        -# %tr
+        -#   %td= link_to 'Sucursales', company_path(@company) + '/branches'
+        -#   %td= @branches.size
+        -# %tr
+        -#   %td= link_to 'Agencias', company_path(@company) + '/agencies'
+        -#   %td= @agencies.size
+        -# %tr
+        -#   %td= link_to 'Directorio', company_path(@company) + '/directors'
+        -#   %td= @president ? @president.name + ' (Presidente)' : '-'
+        -# %tr
+        -#   %td= link_to 'Accionistas', company_path(@company) + '/shareholders'
+        -#   %td= @shareholder ? "#{@shareholder.name} (#{@shareholder.source}) #{@shareholder.stock}%" : '-'

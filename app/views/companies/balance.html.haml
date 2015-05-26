@@ -1,47 +1,51 @@
-%form{method: 'get', action: '/compañías/' + @company.id + '/estados_contables'}
-  %label Trimestre
-  %select{onchange: 'this.form.submit()', name: 'periodo'}
-    - @periods.each do |period|
-      %option{value: period[:periodo], selected: period == @period}= period[:periodo]
+.row
+  .col-xs-12
+    %form.form-horizontal{method: 'get', action: '/compañías/' + @company.id + '/estados_contables'}
+      .form-group
+        %label.control-label.col-xs-1 Trimestre
+        .col-xs-3
+          %select.form-control{onchange: 'this.form.submit()', name: 'periodo'}
+            - @periods.each do |period|
+              %option{value: period[:periodo], selected: period == @period}= period[:periodo]
 
-.row-fluid
-  .span6
-    %table.table.table-striped
+.row
+  .col-xs-6
+    %table.table.table-striped.table-condensed
       %caption Activo
       %tbody
         - @assets.each do |description, value|
           %tr
             %td= description
-            %td= number_to_currency(value, unit: '', precision: 0)
+            %td.money= number_to_currency(value, unit: '', precision: 0)
 
-  .span6
-    %table.table.table-striped
+  .col-xs-6
+    %table.table.table-striped.table-condensed
       %caption Pasivo
       %tbody
         - @liabilities.each do |description, value|
           %tr
             %td= description
-            %td= number_to_currency(value, unit: '', precision: 0)
+            %td.money= number_to_currency(value, unit: '', precision: 0)
 
-.row-fluid
-  .span6
+.row
+  .col-xs-6
     %table.table
       %tbody
-        %tr
+        %tr.total
           %td Total activo
-          %td= number_to_currency(activo = @assets.inject(0) { |sum, asset| sum + asset[1] }, unit: '', precision: 0)
+          %td.money= number_to_currency(activo = @assets.inject(0) { |sum, asset| sum + asset[1] }, unit: '', precision: 0)
 
-  .span6
+  .col-xs-6
     %table.table
       %tbody
-        %tr
+        %tr.total
           %td Total pasivo
-          %td= number_to_currency(pasivo = @liabilities.inject(0) { |sum, asset| sum + asset[1] }, unit: '', precision: 0)
+          %td.money= number_to_currency(pasivo = @liabilities.inject(0) { |sum, asset| sum + asset[1] }, unit: '', precision: 0)
 
-.row-fluid
-  .span12
+.row
+  .col-xs-6
     %table.table
       %tbody
-        %tr
+        %tr.total
           %td Patrimonio neto
-          %td= number_to_currency(activo - pasivo, unit: '', precision: 0)
+          %td.money= number_to_currency(activo - pasivo, unit: '', precision: 0)

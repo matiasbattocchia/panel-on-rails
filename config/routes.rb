@@ -1,13 +1,14 @@
 Panel::Application.routes.draw do
   localized do
+    get 'salir' => 'companies#logout'
     get 'companies' => 'companies#index'
-    get 'companies/:id/data' => 'companies#data'
-    get 'companies/:id/headquarters' => 'companies#headquarters'
-    get 'companies/:id/branches' => 'companies#branches'
-    get 'companies/:id/agencies' => 'companies#agencies'
-    get 'companies/:id/directors' => 'companies#directors'
-    get 'companies/:id/shareholders' => 'companies#shareholders'
+    get 'aseguradoras' => 'companies#index'
+    post 'companies' => 'companies#search'
+    get 'companies/:id/data/general' => 'companies#data'
+    get 'companies/:id/data/directors' => 'companies#directors'
+    get 'companies/:id/data/shareholders' => 'companies#shareholders'
     get 'companies/:id/balance' => 'companies#balance'
+    get 'companies/:id/map' => 'companies#map'
   end
 
   # The priority is based upon order of creation:

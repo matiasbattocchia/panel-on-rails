@@ -11,7 +11,7 @@ class Company < Connection::Entidades
   alias_attribute :locality, :Localidad_DL
   alias_attribute :email, :Email_DL
   alias_attribute :website, :Web_DL
-  
+
   belongs_to :status, foreign_key: :Estado_ID
   belongs_to :corporate_type, foreign_key: :Tipo_Social_ID
   belongs_to :main_activity, foreign_key: :Actividad1_ID
@@ -23,6 +23,7 @@ class Company < Connection::Entidades
   has_many   :directors, foreign_key: :CiaId
   has_many   :shareholders, foreign_key: :CiaId
   has_many   :presentations, foreign_key: :ID_compania
+  has_many   :productions, foreign_key: :id_com_compania
 
   def account_plan period
     schedule = Schedule.where(periodo: period, tipo_entrega: 'Trimestral').first

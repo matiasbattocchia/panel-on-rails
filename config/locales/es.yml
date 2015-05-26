@@ -1,5 +1,10 @@
 es:
   routes:
     companies: compañías
+    aseguradoras: aseguradoras
     data: datos
     balance: estados_contables
+    general: general
+    directors: directorio
+    shareholders: accionistas
+    map: distribución_geográfica

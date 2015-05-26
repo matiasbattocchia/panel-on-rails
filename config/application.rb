@@ -9,6 +9,8 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
+$client = Savon.client(wsdl: 'http://192.168.1.108:8080/LoginLocal/services/usexterno?wsdl')
+
 module Panel
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.

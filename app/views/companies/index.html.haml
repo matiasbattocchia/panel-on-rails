@@ -10,7 +10,7 @@
     - @companies.each do |company|
       - if company.status
         %tr
-          %td= company.id
-          %td= link_to company.short_name, company_path(company) + '/datos'
+          %td.col-xs-1= company.id
+          %td.col-xs-4= link_to company.short_name, company_path(company) + '/datos/general'
           %td
             %span{ class: 'label ' + (company.status.denomination == 'Activa' ? 'label-success' : 'label-danger') }= company.status.denomination

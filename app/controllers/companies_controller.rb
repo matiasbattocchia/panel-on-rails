@@ -1,8 +1,26 @@
 # encoding: utf-8
+def user
+  session[:user]
+end
+
+def authenticate!
+  unless user
+    redirect_to 'http://192.168.1.108:8080/LoginLocal/'
+  end
+end
 
 class CompaniesController < ApplicationController
+  def logout
+    session[:user] = nil
+    redirect_to '/'
+  end
 
   def index
+    if params[:idSession]
+      respuesta = $client.call(:get_user_by_session, soap_action: false, message: {idSesionAbierta: params[:idSession]}).body[:get_user_by_session_response][:return]
+      session[:user] = respuesta[:nombre] + ' ' + respuesta[:apellido]
+    end
+
     @companies = Company.includes(:status).select('CiaId, DenominacionCorta, Estado_ID').order :CiaId
 
     respond_to do |format|
@@ -19,21 +37,21 @@ class CompaniesController < ApplicationController
     @shareholder = @company.shareholders.order(:AccionistasID, :Participacion).last
   end
 
-  def headquarters
-    @company = Company.find params[:id]
-  end
+  # def headquarters
+  #   @company = Company.find params[:id]
+  # end
 
-  def branches
-    @company  = Company.find params[:id]
-    @branches = @company.branches.where Fecha_Baja: nil, Tipo: 'S'
-    render locals: { title: 'Sucursales', branches: @branches }
-  end
+  # def branches
+  #   @company  = Company.find params[:id]
+  #   @branches = @company.branches.where Fecha_Baja: nil, Tipo: 'S'
+  #   render locals: { title: 'Sucursales', branches: @branches }
+  # end
 
-  def agencies
-    @company  = Company.find params[:id]
-    @agencies = @company.branches.where Fecha_Baja: nil, Tipo: 'A'
-    render locals: { title: 'Agencias', branches: @agencies }, template: 'companies/branches'
-  end
+  # def agencies
+  #   @company  = Company.find params[:id]
+  #   @agencies = @company.branches.where Fecha_Baja: nil, Tipo: 'A'
+  #   render locals: { title: 'Agencias', branches: @agencies }, template: 'companies/branches'
+  # end
 
   def directors
     @company           = Company.find params[:id]
@@ -50,6 +68,8 @@ class CompaniesController < ApplicationController
   end
 
   def balance
+    authenticate!
+
     activo = { 'Disponibilidades' => '1.01.00.00.00.00.00.00',
                'Inversiones'      => '1.02.00.00.00.00.00.00',
                'Créditos'         => '1.03.00.00.00.00.00.00',
@@ -91,5 +111,27 @@ class CompaniesController < ApplicationController
     else
       #TODO: Pantalla datos no encontrados.
     end
+  end
+
+  def search
+    redirect_to URI.escape('/compañías/' + Company.find(params['código']).id + '/datos/general')
+  end
+
+  def map
+    @company = Company.find params[:id]
+    @period = params[:periodo] || '2012'
+    @branch = params[:ramo] || 'todos'
+
+    @production = if @branch == 'todos'
+      @company.productions.where(id_tie_anio: @period).select('id_geo_provincia as provincia_id, sum(i_pro_imp_produccion) as produccion').group('id_geo_provincia')
+    else
+      @company.productions.where(id_tie_anio: @period, id_pro_ramo_produccion: @branch).select('id_geo_provincia as provincia_id, i_pro_imp_produccion as produccion')
+    end.all.to_json
+
+    @evolution = if @branch == 'todos'
+      @company.productions.select('sum(i_pro_imp_produccion) as produccion, id_tie_anio as anio').group('id_tie_anio').order('id_tie_anio')
+    else
+      @company.productions.where(id_pro_ramo_produccion: @branch).select('sum(i_pro_imp_produccion) as produccion, id_tie_anio as anio').group('id_tie_anio').order('id_tie_anio')
+    end.all.to_json
   end
 end
